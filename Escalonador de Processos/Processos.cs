@@ -10,12 +10,14 @@ namespace Escalonador_de_Processos
     {
         #region Atributos
         public int Prioridade { get; set; }
+        static public int processID { get;set; }
         #endregion
 
         #region Construtor
         public Processos()
         {
-            return;
+            processID = Escalonador.GetID();
+            Prioridade = 5;
         }
         #endregion
 

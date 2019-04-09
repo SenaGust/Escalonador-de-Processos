@@ -8,6 +8,13 @@ namespace Escalonador_de_Processos
 {
     class Escalonador
     {
-        
+        static private int ID = 1000;
+
+        static public int GetID()
+        {            
+            ID = ++ID;
+
+            return ID;
+        }
     }
 }
