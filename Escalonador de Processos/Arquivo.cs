@@ -14,6 +14,8 @@ namespace Escalonador_de_Processos
 
         public static Escalonador LeituraArquivo(string nomeArquivo)
         {
+            if (!File.Exists(nomeArquivo)) return null;
+
             Escalonador auxiliar = new Escalonador();
 
             //Fazer a leitura do arquivo e organizar entre as 10 listas Circulares
