@@ -10,24 +10,14 @@ namespace Escalonador_de_Processos
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(Escalonador.GetID());
-            Console.WriteLine(Escalonador.GetID());
-            Console.WriteLine(Escalonador.GetID());
-            Console.WriteLine(Escalonador.GetID());
-            Console.WriteLine(Escalonador.GetID());
-            Console.WriteLine(Escalonador.GetID());
-            Console.WriteLine(Escalonador.GetID());
-            Console.WriteLine(Escalonador.GetID());
-            Console.WriteLine(Escalonador.GetID());
-            Console.WriteLine(Escalonador.GetID());
-            Console.WriteLine(Escalonador.GetID());
-            Console.WriteLine(Escalonador.GetID());
-            Console.WriteLine(Escalonador.GetID());
-            Console.WriteLine(Escalonador.GetID());
-            Console.WriteLine(Escalonador.GetID());
-            Console.WriteLine(Escalonador.GetID());
-            Console.WriteLine(Escalonador.GetID());
-            Console.WriteLine(Escalonador.GetID());
+            string nomeArquivo = "teste.txt";
+            Escalonador escalonador = Arquivo.LeituraArquivo(nomeArquivo);
+
+            escalonador.Run();
+
+            //Fim
+            Console.WriteLine("Pressione qualquer tecla para continuar...");
+            Console.ReadKey();
         }
     }
 }

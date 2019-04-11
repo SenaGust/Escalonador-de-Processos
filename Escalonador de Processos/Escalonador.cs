@@ -8,13 +8,18 @@ namespace Escalonador_de_Processos
 {
     class Escalonador
     {
-        static private int ID = 1000;
+        ListaCircular[] Todos { get; set; }
+        public int TempoTotal { get; set; }
 
-        static public int GetID()
-        {            
-            ID = ++ID;
+        public Escalonador()
+        {
+            this.Todos = new ListaCircular[10];
+            this.TempoTotal = 0;
+        }
 
-            return ID;
+        public void Run()
+        {
+
         }
     }
 }

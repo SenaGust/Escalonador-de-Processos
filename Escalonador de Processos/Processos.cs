@@ -9,31 +9,39 @@ namespace Escalonador_de_Processos
     class Processos : IDado
     {
         #region Atributos
-        public int Prioridade { get; set; }
-        static public int processID { get;set; }
+        public int PID { get; private set; }
+        public string Nome { get; set; }
+        public int Prioridade { get; private set; }
+        public int QtdeCiclos { get; set; }
+        public int TempoCPU { get; set; } //Talvez
         #endregion
 
         #region Construtor
-        public Processos()
+        public Processos(int PID, string nome, int prioridade, int qtdeCiclos, int TempoCPU)
         {
-            processID = Escalonador.GetID();
-            Prioridade = 5;
+            this.PID = PID;
+            this.Nome = nome;
+            this.Prioridade = prioridade;
+            this.QtdeCiclos = qtdeCiclos;
+            this.TempoCPU = TempoCPU;
         }
         #endregion
 
         #region Métodos
+        public void DiminuirPrioridade()
+        {
 
+        }
+        public void AumentarPrioridade()
+        {
+
+        }
         #endregion
 
         #region Métodos Interface
         public override string ToString()
         {
-            return "Implementar";
-        }
-        public override bool Equals(object obj)
-        {
-            Console.WriteLine("Falta Implementar");
-            return false;
+            return "Falta Implementar";
         }
         #endregion
     }
