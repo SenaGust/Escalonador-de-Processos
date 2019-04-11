@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arquivo.cs" />
     <Compile Include="Elemento.cs" />
     <Compile Include="Escalonador.cs" />
     <Compile Include="IDado.cs" />
