@@ -13,10 +13,13 @@ namespace Escalonador_de_Processos
             string nomeArquivo = "teste.txt";
             Escalonador escalonador = Arquivo.LeituraArquivo(nomeArquivo);
 
-            escalonador.Run();
+            if (escalonador == null)
+                Console.WriteLine("O arquivo {0} não existe.", nomeArquivo);
+            else
+                escalonador.Run();
 
             //Fim
-            Console.WriteLine("Pressione qualquer tecla para continuar...");
+            Console.WriteLine("\n\nPressione qualquer tecla para continuar...");
             Console.ReadKey();
         }
     }
