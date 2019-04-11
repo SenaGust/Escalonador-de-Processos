@@ -8,7 +8,6 @@ namespace Escalonador_de_Processos
 {
     interface IDado
     {
-        bool Equals(Object obj);
         string ToString();
     }
 }
