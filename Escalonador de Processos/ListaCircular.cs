@@ -9,13 +9,16 @@ namespace Escalonador_de_Processos
     class ListaCircular
     {
         #region Atributos
-
+        public Elemento atual { get; set; }
+        public Elemento anterior { get; set; }
         #endregion
 
         #region Construtor
         public ListaCircular()
         {
-
+            atual = new Elemento(null);
+            anterior = atual;
+            atual.Proximo = atual;
         }
         #endregion
 
@@ -30,7 +33,7 @@ namespace Escalonador_de_Processos
         }
         public bool Vazia()
         {
-            return false;
+            return atual == anterior;
         }
         #endregion
     }
