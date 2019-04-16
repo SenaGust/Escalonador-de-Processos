@@ -23,25 +23,25 @@ namespace Escalonador_de_Processos
             this.Nome = nome;
             this.Prioridade = prioridade;
             this.QtdeCiclos = qtdeCiclos;
-            this.TempoCPU = TempoCPU;
+            this.TempoCPU = TempoCPU; //talvez
         }
         #endregion
 
         #region Métodos
         public void DiminuirPrioridade()
         {
-
+            
         }
         public void AumentarPrioridade()
         {
-
+            
         }
         #endregion
 
         #region Métodos Interface
         public override string ToString()
         {
-            return "Falta Implementar";
+            return string.Format(" PID: {0} Nome: {1} Prioridade: {2} Quantidade de Ciclos: {3} Tempo de CPU: {4}", this.PID, this.Nome, this.Prioridade, this.QtdeCiclos, this.TempoCPU);
         }
         #endregion
     }
