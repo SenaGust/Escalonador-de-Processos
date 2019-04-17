@@ -23,12 +23,19 @@ namespace Escalonador_de_Processos
 
         public void Run()
         {
-
+            for (int pos = 0; pos < Todos.Length; pos++)
+                while(!Todos[pos].Vazia())
+                    Todos[pos].Retirar();
         }
 
         public void AdicionarProcesso()
         {
             
+        }
+
+        public bool Vazio()
+        {
+            return Todos[0].Vazia() && Todos[1].Vazia() && Todos[2].Vazia() && Todos[3].Vazia() && Todos[4].Vazia() && Todos[5].Vazia() && Todos[6].Vazia() && Todos[7].Vazia() && Todos[8].Vazia() && Todos[9].Vazia();
         }
     }
 }
