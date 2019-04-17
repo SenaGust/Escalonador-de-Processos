@@ -9,32 +9,52 @@ namespace Escalonador_de_Processos
     class ListaCircular
     {
         #region Atributos
-        public Elemento atual { get; set; }
-        public Elemento anterior { get; set; }
+        public Elemento Atual { get; set; }
+        public Elemento Anterior { get; set; }
         #endregion
 
         #region Construtor
         public ListaCircular()
         {
-            atual = new Elemento(null);
-            anterior = atual;
-            atual.Proximo = atual;
+            this.Atual = new Elemento(null);
+            this.Anterior = this.Atual; //o anterior é igual ao atual
+            this.Atual.Proximo = this.Atual; //apontador do atual aponta para o próprio atual
         }
         #endregion
 
-        #region Métodos
+        #region Métodos //teste
         public void Inserir(IDado dado)
         {
-            return; 
+            Elemento novo = new Elemento(dado);
+            this.Anterior.Proximo = novo;
+            novo.Proximo = this.Atual;
+            if (this.Vazia())
+            {
+                this.Atual = novo;
+            }
+
+            this.Anterior = novo;
         }
         public IDado Retirar()
         {
-            return null;
+            if (this.Vazia())
+                return null;
+
+
+            Elemento aux = this.Atual;
+            this.Anterior.Proximo = aux.Proximo;
+            this.Atual = aux.Proximo;
+            aux.Proximo = null;
+
+            if (this.Vazia()) this.Atual.Proximo = this.Atual;
+            return aux.MeuDado;
         }
         public bool Vazia()
         {
-            return atual == anterior;
+            return Atual == Anterior;
         }
         #endregion
+
+
     }
 }
