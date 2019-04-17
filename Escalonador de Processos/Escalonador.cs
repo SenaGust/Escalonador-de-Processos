@@ -14,12 +14,21 @@ namespace Escalonador_de_Processos
         public Escalonador()
         {
             this.Todos = new ListaCircular[10];
+            for (int pos = 0; pos < Todos.Length; pos++)
+            {
+                Todos[pos] = new ListaCircular();
+            }
             this.TempoTotal = 0;
         }
 
         public void Run()
         {
 
+        }
+
+        public void AdicionarProcesso()
+        {
+            
         }
     }
 }
