@@ -54,7 +54,27 @@ namespace Escalonador_de_Processos
             return Atual == Anterior;
         }
         #endregion
+        public override string ToString()
+        {
+            if (!Vazia())
+                return null;
+            else
+            {
+                StringBuilder result = new StringBuilder();
+                Elemento aux = Atual;
 
+                result.Append(aux.MeuDado.ToString() + "\n");
+                aux = aux.Proximo;
+
+                while (aux.MeuDado != Atual.MeuDado)
+                {
+                    aux = aux.Proximo;
+                    result.Append(aux.MeuDado.ToString() + "\n");
+                }
+
+                return result.ToString();
+            }
+        }
 
     }
 }
