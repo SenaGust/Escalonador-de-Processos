@@ -67,9 +67,9 @@ namespace Escalonador_de_Processos
                 aux = aux.Proximo;
 
                 while (aux.MeuDado != Atual.MeuDado)
-                {
-                    aux = aux.Proximo;
+                {                    
                     result.Append(aux.MeuDado.ToString() + "\n");
+                    aux = aux.Proximo;
                 }
 
                 return result.ToString();
