@@ -13,17 +13,16 @@ namespace Escalonador_de_Processos
         public string Nome { get; set; }
         public int Prioridade { get; private set; }
         public int QtdeCiclos { get; set; }
-        public int TempoCPU { get; set; } //Talvez
+        public int TempoCPU { get; set; } //Talvez no futuro :)
         #endregion
 
         #region Construtor
-        public Processos(int PID, string nome, int prioridade, int qtdeCiclos, int TempoCPU)
+        public Processos(int PID, string nome, int prioridade, int qtdeCiclos)
         {
             this.PID = PID;
             this.Nome = nome;
             this.Prioridade = prioridade;
-            this.QtdeCiclos = qtdeCiclos;
-            this.TempoCPU = TempoCPU; //talvez
+            this.QtdeCiclos = qtdeCiclos;           
         }
         #endregion
 
@@ -43,7 +42,7 @@ namespace Escalonador_de_Processos
         #region Métodos Interface
         public override string ToString()
         {
-            return string.Format(" PID: {0} Nome: {1} Prioridade: {2} Quantidade de Ciclos: {3} Tempo de CPU: {4}", this.PID, this.Nome, this.Prioridade, this.QtdeCiclos, this.TempoCPU);
+            return string.Format(" PID: {0} Nome: {1} Prioridade: {2} Quantidade de Ciclos: {3}", this.PID, this.Nome, this.Prioridade, this.QtdeCiclos);
         }
         #endregion
     }

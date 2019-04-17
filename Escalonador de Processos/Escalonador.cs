@@ -8,7 +8,7 @@ namespace Escalonador_de_Processos
 {
     class Escalonador
     {
-        ListaCircular[] Todos { get; set; }
+        public ListaCircular[] Todos { get; set; }
         public int TempoTotal { get; set; }
 
         public Escalonador()
