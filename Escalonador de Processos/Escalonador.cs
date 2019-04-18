@@ -28,9 +28,24 @@ namespace Escalonador_de_Processos
                     Todos[pos].Retirar();
         }
 
-        public void AdicionarProcesso()
+        public void AdicionarProcesso(string [] info)
         {
-            
+            IDado novo;
+            novo = new Processos(Convert.ToInt32(info[0]), info[1], Convert.ToInt32(info[2]), Convert.ToInt32(info[3]));
+
+            switch (info[2])
+            {
+                case "1": Todos[0].Inserir(novo); break;
+                case "2": Todos[1].Inserir(novo); break;
+                case "3": Todos[2].Inserir(novo); break;
+                case "4": Todos[3].Inserir(novo); break;
+                case "5": Todos[4].Inserir(novo); break;
+                case "6": Todos[5].Inserir(novo); break;
+                case "7": Todos[6].Inserir(novo); break;
+                case "8": Todos[7].Inserir(novo); break;
+                case "9": Todos[8].Inserir(novo); break;
+                case "10": Todos[9].Inserir(novo); break;
+            }
         }
 
         public bool Vazio()

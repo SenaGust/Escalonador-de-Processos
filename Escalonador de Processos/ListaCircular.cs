@@ -18,7 +18,7 @@ namespace Escalonador_de_Processos
         {
             this.Atual = new Elemento(null);
             this.Anterior = this.Atual; //o anterior é igual ao atual
-            this.Atual.Proximo = this.Atual; //apontador do atual aponta para o próprio atual
+            this.Atual.Proximo = this.Anterior; //apontador do atual aponta para o próprio atual
         }
         #endregion
 
