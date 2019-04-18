@@ -57,7 +57,7 @@ namespace Escalonador_de_Processos
 
             for (int pos = 0; pos < Todos.Length; pos++)
             {
-                auxImpressao.AppendLine("\tPrioridade " + pos);
+                auxImpressao.AppendLine("\tPrioridade " + (pos + 1));
                 auxImpressao.AppendLine(Todos[pos].ToString());
             }
 

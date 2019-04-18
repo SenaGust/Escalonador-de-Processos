@@ -10,7 +10,7 @@ namespace Escalonador_de_Processos
     {
         static void Main(string[] args)
         {
-            testar();
+            //testar();
 
             string nomeArquivo = "teste.txt";
             Escalonador escalonador = Arquivo.LeituraArquivo(nomeArquivo);
