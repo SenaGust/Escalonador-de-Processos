@@ -14,6 +14,7 @@ namespace Escalonador_de_Processos
         public Elemento(IDado dado)
         {
             this.MeuDado = dado;
+            Proximo = null;
         }
     }
 }
