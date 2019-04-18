@@ -18,63 +18,65 @@ namespace Escalonador_de_Processos
         {
             this.Atual = new Elemento(null);
             this.Anterior = this.Atual; //o anterior é igual ao atual
-            this.Atual.Proximo = this.Anterior; //apontador do atual aponta para o próprio atual
+            this.Atual.Proximo = this.Atual; //apontador do atual aponta para o próprio atual
         }
         #endregion
 
-        #region Métodos //teste
+        #region Métodos
         public void Inserir(IDado dado)
         {
             Elemento novo = new Elemento(dado);
+
             this.Anterior.Proximo = novo;
             novo.Proximo = this.Atual;
             if (this.Vazia())
-            {
                 this.Atual = novo;
-            }
-
-            this.Anterior = novo;
+            else
+                this.Anterior = novo;
         }
+
         public IDado Retirar()
         {
             if (this.Vazia())
                 return null;
-
 
             Elemento aux = this.Atual;
             this.Anterior.Proximo = aux.Proximo;
             this.Atual = aux.Proximo;
             aux.Proximo = null;
 
-            if (this.Vazia()) this.Atual.Proximo = this.Atual;
+            if (this.Vazia())
+                this.Atual.Proximo = this.Atual;
+
             return aux.MeuDado;
         }
+
         public bool Vazia()
         {
             return Atual == Anterior;
         }
-        #endregion
+
         public override string ToString()
         {
-            if (!Vazia())
+            if (Vazia())
                 return null;
             else
             {
                 StringBuilder result = new StringBuilder();
                 Elemento aux = Atual;
 
-                result.Append(aux.MeuDado.ToString() + "\n");
+                result.AppendLine(aux.MeuDado.ToString());
                 aux = aux.Proximo;
 
                 while (aux.MeuDado != Atual.MeuDado)
                 {
-                    result.Append(aux.MeuDado.ToString() + "\n");
+                    result.AppendLine(aux.MeuDado.ToString());
                     aux = aux.Proximo;
                 }
 
                 return result.ToString();
             }
         }
-
+        #endregion
     }
 }
