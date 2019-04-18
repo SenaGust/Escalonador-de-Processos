@@ -32,8 +32,8 @@ namespace Escalonador_de_Processos
             {
                 this.Atual = novo;
             }
-            else
-                this.Anterior = novo;
+
+            this.Anterior = novo;
         }
         public IDado Retirar()
         {
@@ -67,7 +67,7 @@ namespace Escalonador_de_Processos
                 aux = aux.Proximo;
 
                 while (aux.MeuDado != Atual.MeuDado)
-                {                    
+                {
                     result.Append(aux.MeuDado.ToString() + "\n");
                     aux = aux.Proximo;
                 }
