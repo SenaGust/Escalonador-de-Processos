@@ -32,8 +32,8 @@ namespace Escalonador_de_Processos
             {
                 this.Atual = novo;
             }
-
-            this.Anterior = novo;
+            else
+                this.Anterior = novo;
         }
         public IDado Retirar()
         {
