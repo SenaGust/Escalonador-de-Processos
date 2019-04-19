@@ -28,6 +28,10 @@ namespace Escalonador_de_Processos
         #endregion
 
         #region Métodos
+        public void DiminuirQtdeCiclos(int quantCiclos)
+        {
+            this.QtdeCiclos -= quantCiclos;
+        }
         public void DiminuirPrioridade()
         {
             if (this.Prioridade > 1)
