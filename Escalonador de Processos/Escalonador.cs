@@ -3,29 +3,76 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Escalonador_de_Processos
 {
     class Escalonador
     {
+        #region Atributos
         public ListaCircular[] Todos { get; private set; }
         public int TempoTotal { get; private set; }
+        public int Quantum { get; set; }
+        #endregion
 
+        #region Construtor
         public Escalonador()
         {
+            //Instanciando todas as listas
             this.Todos = new ListaCircular[10];
             for (int pos = 0; pos < Todos.Length; pos++)
             {
                 Todos[pos] = new ListaCircular();
             }
-            this.TempoTotal = 0;
-        }
 
+            //Definindo outros atributos
+            this.TempoTotal = 0;
+        }   
+        #endregion
+
+        #region Métodos
         public void Run()
         {
             for (int pos = 0; pos < Todos.Length; pos++)
-                while(!Todos[pos].Vazia())
-                    Todos[pos].Retirar();
+            {
+                while (!Todos[pos].Vazia())
+                {
+                    Thread.Sleep(1500);
+
+                    //Todos[pos].Retirar(); //Não vamos retirar, mas manipular de dentro da lista
+
+                    Console.Clear();
+                    Console.WriteLine(this.ToString());
+                }
+            }
+        }
+
+        public void Processar(Processos processo)
+        {
+            int quantidadeTempo = processo.QtdeCiclos - this.Quantum;
+            if(quantidadeTempo == 0)
+            {
+                //processo finalizado
+                processo.DiminuirQtdeCiclos(this.Quantum);
+
+                //retirar o processo da fila
+            }
+            else if(quantidadeTempo < 0)
+            {
+                //processo finalizado antes do tempo
+                processo.DiminuirQtdeCiclos(processo.QtdeCiclos);
+
+                //retirar o processo da fila
+            }
+            else//quantidade > 0
+            {
+                //processo precisa ser enviado para as listas, porque ainda não finalizou
+
+                processo.DiminuirQtdeCiclos(this.Quantum);
+
+                //mudar Prioridade??? ----> retirar da lista, mudar a prioridade e adicionar ao escalonador
+                //passar para o proximo da lista
+            }
         }
 
         public void AdicionarProcesso(Processos processo)
@@ -63,5 +110,6 @@ namespace Escalonador_de_Processos
 
             return auxImpressao.ToString();
         }
+        #endregion
     }
 }
