@@ -42,18 +42,18 @@ namespace Escalonador_de_Processos
                 while (!Todos[pos].Vazia())
                 {
                     Processos processo = (Processos)(Todos[pos].Retirar());
-                    
+                    Console.WriteLine("Processando: " + processo.ToString());
                     if(Processar(processo) > 0)
                     {
                         Console.ForegroundColor = ConsoleColor.DarkGreen;
-                        Console.WriteLine("Processo Finalizado: " + processo.ToString());
+                        Console.WriteLine("Processo Finalizado");
                         Console.ForegroundColor = ConsoleColor.White;
                     }
                     else
                     {
                         AdicionarProcesso(processo);
                         Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine("Processo Reinserido " + processo.ToString());
+                        Console.WriteLine("Processo não Finalizado");
                         Console.ForegroundColor = ConsoleColor.White;
                     }
 
