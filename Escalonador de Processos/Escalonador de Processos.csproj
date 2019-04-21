@@ -47,6 +47,8 @@
     <Compile Include="Arquivo.cs" />
     <Compile Include="Elemento.cs" />
     <Compile Include="Escalonador.cs" />
+    <Compile Include="Fila.cs" />
+    <Compile Include="IEstruturaDados.cs" />
     <Compile Include="IDado.cs" />
     <Compile Include="ListaCircular.cs" />
     <Compile Include="Processos.cs" />
