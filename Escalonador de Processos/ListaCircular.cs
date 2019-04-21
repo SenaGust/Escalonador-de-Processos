@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Escalonador_de_Processos
 {
-    class ListaCircular
+    class ListaCircular : IEstruturaDados
     {
         #region Atributos
         public Elemento Atual { get; set; }
