@@ -10,7 +10,7 @@ namespace Escalonador_de_Processos
     class Escalonador
     {
         #region Atributos
-        public ListaCircular[] Todos { get; private set; }
+        public IEstruturaDados[] Todos { get; private set; }
         public int TempoTotal { get; private set; }
         public int Quantum { get; set; }
         #endregion
@@ -19,10 +19,10 @@ namespace Escalonador_de_Processos
         public Escalonador()
         {
             //Instanciando todas as listas
-            this.Todos = new ListaCircular[10];
+            this.Todos = new Fila[10];
             for (int pos = 0; pos < Todos.Length; pos++)
             {
-                Todos[pos] = new ListaCircular();
+                Todos[pos] = new Fila();
             }
 
             //Definindo outros atributos
@@ -31,47 +31,70 @@ namespace Escalonador_de_Processos
         #endregion
 
         #region Métodos
-        public void Run()
+        public void Run(int quantum)
         {
+            this.Quantum = quantum;
+
             for (int pos = 0; pos < Todos.Length; pos++)
             {
+                Console.WriteLine("\t\tProcessando Lista de Processos com Prioridade " + (pos + 1));
+
                 while (!Todos[pos].Vazia())
                 {
-                    Thread.Sleep(1500);
+                    Processos processo = (Processos)(Todos[pos].Retirar());
+                    
+                    if(Processar(processo) > 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        Console.WriteLine("Processo Finalizado: " + processo.ToString());
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    else
+                    {
+                        AdicionarProcesso(processo);
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine("Processo Reinserido " + processo.ToString());
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
 
-                    //Todos[pos].Retirar(); //Não vamos retirar, mas manipular de dentro da lista
-
-                    Console.Clear();
-                    Console.WriteLine(this.ToString());
+                    Console.WriteLine("\n" + Todos[pos].ToString());
                 }
+
             }
         }
 
-        public void Processar(Processos processo)
+        public int Processar(Processos processo)
         {
             int quantidadeTempo = processo.QtdeCiclos - this.Quantum;
-            if(quantidadeTempo == 0)
-            {
-                //processo finalizado
-                processo.DiminuirQtdeCiclos(this.Quantum);
+            int tempoTotalQuantum = this.Quantum * 500;
 
-                //retirar o processo da fila
+            if (quantidadeTempo == 0)
+            {
+                //processo finalizado -> retirar o processo da fila
+                processo.DiminuirQtdeCiclos(this.Quantum);
+                Thread.Sleep(tempoTotalQuantum);
+
+                return 1;
             }
             else if(quantidadeTempo < 0)
             {
-                //processo finalizado antes do tempo
+                //processo finalizado antes do tempo -> retirar o processo da fila
                 processo.DiminuirQtdeCiclos(processo.QtdeCiclos);
+                tempoTotalQuantum *= processo.QtdeCiclos / this.Quantum; //redefinição do quantum gasto
+                Thread.Sleep(tempoTotalQuantum);
 
-                //retirar o processo da fila
+                return 1;
             }
             else//quantidade > 0
             {
-                //processo precisa ser enviado para as listas, porque ainda não finalizou
+                //processo não finalizou -> Continua na fila
 
                 processo.DiminuirQtdeCiclos(this.Quantum);
-
+                Thread.Sleep(tempoTotalQuantum);
+                
                 //mudar Prioridade??? ----> retirar da lista, mudar a prioridade e adicionar ao escalonador
-                //passar para o proximo da lista
+
+                return -1;
             }
         }
 
