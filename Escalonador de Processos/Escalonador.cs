@@ -61,6 +61,8 @@ namespace Escalonador_de_Processos
                 }
 
             }
+
+            Console.WriteLine("\nO total de ciclos utilizado pelos processos é de " + this.TempoTotal);
         }
 
         public int Processar(Processos processo)
@@ -71,8 +73,9 @@ namespace Escalonador_de_Processos
             if (quantidadeTempo == 0)
             {
                 //processo finalizado -> retirar o processo da fila
-                processo.DiminuirQtdeCiclos(this.Quantum);
-                Thread.Sleep(tempoTotalQuantum);
+                processo.DiminuirQtdeCiclos(this.Quantum); 
+                Thread.Sleep(tempoTotalQuantum); //
+                TempoTotal += Quantum;
 
                 return 1;
             }
@@ -82,6 +85,7 @@ namespace Escalonador_de_Processos
                 processo.DiminuirQtdeCiclos(processo.QtdeCiclos);
                 tempoTotalQuantum *= processo.QtdeCiclos / this.Quantum; //redefinição do quantum gasto
                 Thread.Sleep(tempoTotalQuantum);
+                TempoTotal += processo.QtdeCiclos;
 
                 return 1;
             }
@@ -91,8 +95,10 @@ namespace Escalonador_de_Processos
 
                 processo.DiminuirQtdeCiclos(this.Quantum);
                 Thread.Sleep(tempoTotalQuantum);
-                
+                TempoTotal += Quantum;
+
                 //mudar Prioridade??? ----> retirar da lista, mudar a prioridade e adicionar ao escalonador
+                processo.DiminuirPrioridade();
 
                 return -1;
             }
