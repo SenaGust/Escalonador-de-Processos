@@ -13,7 +13,7 @@ namespace Escalonador_de_Processos
         public IEstruturaDados[] Todos { get; private set; }
         public int TempoTotal { get; private set; }
         public int Quantum { get; set; }
-        public int TempoDeEsperaMaximo { get; private set; }
+        public int TempoTerminoEsperado { get; private set; }
         #endregion
 
         #region Construtor
@@ -28,7 +28,7 @@ namespace Escalonador_de_Processos
 
             //Definindo outros atributos
             this.TempoTotal = 0;
-        }   
+        }
         #endregion
 
         #region Métodos
@@ -36,15 +36,15 @@ namespace Escalonador_de_Processos
         {
             this.Quantum = quantum;
             int pos = 0;
-            while(!Vazio())
+            while (!Vazio() && pos < 10)
             {
                 Console.WriteLine("\t\tProcessando Lista de Processos com Prioridade " + (pos + 1));
-
+                
                 while (!Todos[pos].Vazia())
                 {
                     Processos processo = (Processos)(Todos[pos].Retirar());
                     Console.WriteLine("Processando: " + processo.ToString());
-                    if(Process(processo, ref pos) > 0)
+                    if (Process(processo, ref pos) > 0)
                     {
                         Console.ForegroundColor = ConsoleColor.DarkGreen;
                         Console.WriteLine("Processo Finalizado");
@@ -52,18 +52,18 @@ namespace Escalonador_de_Processos
                     }
                     else
                     {
-                        AdicionarProcesso(processo); // if (pos < 9) Todos[pos + 1].inserir(processo) else Todos[pos].inserir(processo)
+                        AdicionarProcesso(processo);
                         Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.WriteLine("Processo não Finalizado");
                         Console.ForegroundColor = ConsoleColor.White;
                     }
 
-                    Console.WriteLine("\n" + Todos[pos].ToString());
+                    Console.WriteLine("Estado Fila " + (pos+1) + " \n" + Todos[pos].ToString());
                 }
                 pos++;
             }
 
-            Console.WriteLine("\nO total de ciclos utilizado pelos processos é de " + this.TempoTotal);
+            Console.WriteLine("\nO total de ciclos utilizado pelos processos é de " + this.TempoTotal + " sendo que deveria usar " + this.TempoTerminoEsperado);
         }
 
         //public int Processar(Processos processo)
@@ -116,10 +116,10 @@ namespace Escalonador_de_Processos
         {
             int aux = 1;
 
-            while(aux <= Quantum && process.QtdeCiclos > 0)
+            while (aux <= Quantum && process.QtdeCiclos > 0)
             {
                 process.DiminuirQtdeCiclos(1);
-                Thread.Sleep(1000);
+                //Thread.Sleep(1000);
                 TempoTotal++;
                 aux++;
             }
@@ -127,21 +127,27 @@ namespace Escalonador_de_Processos
             if (process.QtdeCiclos == 0)
                 return 1;
             else
-            {                
+            {
                 //Gambiarra no tempo de espera maximo
-                if (TempoTotal >= 840/*TempoDeEsperaMaximo*/)
+                if (TempoTotal >= TempoTerminoEsperado * 3/4)
                 {
                     process.AumentarPrioridade();
                     pos--;
                 }
                 else
                     process.DiminuirPrioridade();
+
                 return -1;
-            }            
+            }
         }
 
         public void AdicionarProcesso(Processos processo)
         {
+            if (processo.QtdeCiclos <= 10)
+                TempoTerminoEsperado += processo.QtdeCiclos;
+            else
+                TempoTerminoEsperado += 10;
+
             switch (processo.Prioridade)
             {
                 case 1: Todos[0].Inserir(processo); break;
