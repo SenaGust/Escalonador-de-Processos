@@ -13,6 +13,7 @@ namespace Escalonador_de_Processos
         public IEstruturaDados[] Todos { get; private set; }
         public int TempoTotal { get; private set; }
         public int Quantum { get; set; }
+        public int TempoDeEsperaMaximo { get; private set; }
         #endregion
 
         #region Construtor
@@ -34,8 +35,8 @@ namespace Escalonador_de_Processos
         public void Run(int quantum)
         {
             this.Quantum = quantum;
-
-            for (int pos = 0; pos < Todos.Length; pos++)
+            int pos = 0;
+            while(!Vazio())
             {
                 Console.WriteLine("\t\tProcessando Lista de Processos com Prioridade " + (pos + 1));
 
@@ -43,7 +44,7 @@ namespace Escalonador_de_Processos
                 {
                     Processos processo = (Processos)(Todos[pos].Retirar());
                     Console.WriteLine("Processando: " + processo.ToString());
-                    if(Processar(processo) > 0)
+                    if(Process(processo, ref pos) > 0)
                     {
                         Console.ForegroundColor = ConsoleColor.DarkGreen;
                         Console.WriteLine("Processo Finalizado");
@@ -59,49 +60,84 @@ namespace Escalonador_de_Processos
 
                     Console.WriteLine("\n" + Todos[pos].ToString());
                 }
-
+                pos++;
             }
 
             Console.WriteLine("\nO total de ciclos utilizado pelos processos é de " + this.TempoTotal);
         }
 
-        public int Processar(Processos processo)
+        //public int Processar(Processos processo)
+        //{
+        //    //int quantidadeTempo = processo.QtdeCiclos - this.Quantum;
+        //    //int tempoTotalQuantum = this.Quantum * 500;
+        //    //return Process(processo);
+        //    //if (quantidadeTempo == 0)
+        //    //{
+        //    //    //processo finalizado -> retirar o processo da fila
+        //    //    //processo.DiminuirQtdeCiclos(this.Quantum); 
+        //    //    //Thread.Sleep(tempoTotalQuantum); 
+        //    //    //TempoTotal += Quantum;
+        //    //    Process(processo);
+
+        //    //    return 1;
+        //    //}
+        //    //else if(quantidadeTempo < 0)
+        //    //{
+        //    //    //processo finalizado antes do tempo -> retirar o processo da fila
+        //    //    //processo.DiminuirQtdeCiclos(processo.QtdeCiclos);
+        //    //    //tempoTotalQuantum *= processo.QtdeCiclos / this.Quantum; //redefinição do quantum gasto
+        //    //    //Thread.Sleep(tempoTotalQuantum);
+        //    //    //TempoTotal += processo.QtdeCiclos;
+        //    //    Process(processo);
+
+        //    //    return 1;
+        //    //}
+        //    //else//quantidade > 0
+        //    //{
+        //    //    //processo não finalizou -> Continua na fila
+
+        //    //    //processo.DiminuirQtdeCiclos(this.Quantum);
+        //    //    //Thread.Sleep(tempoTotalQuantum);
+        //    //    //TempoTotal += Quantum;
+        //    //    Process(processo);
+
+        //    //    //mudar Prioridade??? ----> retirar da lista, mudar a prioridade e adicionar ao escalonador
+
+        //    //    if (TempoTotal >= TempoDeEsperaMaximo)
+        //    //        processo.AumentarPrioridade();
+        //    //    else
+        //    //        processo.DiminuirPrioridade();
+
+        //    //    return -1;
+        //    //}
+        //}
+
+        private int Process(Processos process, ref int pos)
         {
-            int quantidadeTempo = processo.QtdeCiclos - this.Quantum;
-            int tempoTotalQuantum = this.Quantum * 500;
+            int aux = 1;
 
-            if (quantidadeTempo == 0)
+            while(aux <= Quantum && process.QtdeCiclos > 0)
             {
-                //processo finalizado -> retirar o processo da fila
-                processo.DiminuirQtdeCiclos(this.Quantum); 
-                Thread.Sleep(tempoTotalQuantum); //
-                TempoTotal += Quantum;
-
-                return 1;
+                process.DiminuirQtdeCiclos(1);
+                Thread.Sleep(1000);
+                TempoTotal++;
+                aux++;
             }
-            else if(quantidadeTempo < 0)
-            {
-                //processo finalizado antes do tempo -> retirar o processo da fila
-                processo.DiminuirQtdeCiclos(processo.QtdeCiclos);
-                tempoTotalQuantum *= processo.QtdeCiclos / this.Quantum; //redefinição do quantum gasto
-                Thread.Sleep(tempoTotalQuantum);
-                TempoTotal += processo.QtdeCiclos;
 
+            if (process.QtdeCiclos == 0)
                 return 1;
-            }
-            else//quantidade > 0
-            {
-                //processo não finalizou -> Continua na fila
-
-                processo.DiminuirQtdeCiclos(this.Quantum);
-                Thread.Sleep(tempoTotalQuantum);
-                TempoTotal += Quantum;
-
-                //mudar Prioridade??? ----> retirar da lista, mudar a prioridade e adicionar ao escalonador
-                processo.DiminuirPrioridade();
-
+            else
+            {                
+                //Gambiarra no tempo de espera maximo
+                if (TempoTotal >= 840/*TempoDeEsperaMaximo*/)
+                {
+                    process.AumentarPrioridade();
+                    pos--;
+                }
+                else
+                    process.DiminuirPrioridade();
                 return -1;
-            }
+            }            
         }
 
         public void AdicionarProcesso(Processos processo)
