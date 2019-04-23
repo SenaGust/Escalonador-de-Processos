@@ -34,13 +34,13 @@ namespace Escalonador_de_Processos
         }
         public void DiminuirPrioridade()
         {
-            if (this.Prioridade > 1)
-                this.Prioridade--;
+            if (this.Prioridade < 10)
+                this.Prioridade++;
         }
         public void AumentarPrioridade()
         {
-            if (this.Prioridade < 10)
-                this.Prioridade++;
+            if (this.Prioridade > 1)
+                this.Prioridade--;
         }
         #endregion
 
