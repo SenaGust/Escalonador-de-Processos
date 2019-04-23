@@ -51,7 +51,7 @@ namespace Escalonador_de_Processos
                     }
                     else
                     {
-                        AdicionarProcesso(processo);
+                        AdicionarProcesso(processo); // if (pos < 9) Todos[pos + 1].inserir(processo) else Todos[pos].inserir(processo)
                         Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.WriteLine("Processo não Finalizado");
                         Console.ForegroundColor = ConsoleColor.White;
